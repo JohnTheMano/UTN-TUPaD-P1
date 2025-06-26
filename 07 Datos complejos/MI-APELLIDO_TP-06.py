@@ -54,3 +54,60 @@ else:
 # 5) Solicita al usuario una frase e imprime:
 # • Las palabras únicas (usando un set).
 # • Un diccionario con la cantidad de veces que aparece cada palabra.
+
+def frase_a_lista(frase):
+    frase_lista = frase.split()
+    return frase_lista
+
+def cuenta_palabras_a_diccionario(listado):
+    for i in range(len(listado)):
+        if listado[i] not in diccionario:
+            diccionario[listado[i]]=1
+        else:
+            diccionario[listado[i]] += 1
+    return diccionario  
+
+diccionario={}
+
+entrada = input("Ingrese una frase")
+
+listado = frase_a_lista(entrada)
+
+respuesta = cuenta_palabras_a_diccionario(listado)
+
+print(respuesta)
+
+
+# 6) Permití ingresar los nombres de 3 alumnos, y para cada uno una tupla de 3 notas.
+# Luego, mostrá el promedio de cada alumno.
+
+alumnos={}
+for i in range(3):
+    notas =[]
+    nombre = input(f"\ningrese nombre del alumno {i+1}: ")
+    for j in range(3):
+        notas.append(int(input(f"Ingrese la Nota {j+1}: ")))
+    alumnos[nombre]=tuple(notas)
+
+print(alumnos)
+
+# 7) Dado dos sets de números, representando dos listas de estudiantes que aprobaron Parcial 1
+# y Parcial 2:
+# • Mostrá los que aprobaron ambos parciales.
+# • Mostrá los que aprobaron solo uno de los dos.
+# • Mostrá la lista total de estudiantes que aprobaron al menos un parcial (sin repetir)
+
+parcial1 = {1001, 1002, 1003, 1007, 1010, 1012, 1015, 1020}
+parcial2 = {1002, 1004, 1005, 1007, 1010, 1018, 1020, 1022}
+
+def buscar_ambos(set1, set2):
+    ambos_aprobados = set1 and set2  
+    aprobaron_el_primero = set1 - set2 
+    aprobaron_el_segundo = set2 - set1  
+    return ambos_aprobados, aprobaron_el_primero, aprobaron_el_segundo
+
+ambos, solo1, solo2 = buscar_ambos(parcial1, parcial2)
+
+print(f"Aprobaron ambos parciales: {ambos}")
+print(f"Aprobaron solo el parcial 1: {solo1}")
+print(f"Aprobaron solo el parcial 2: {solo2}")
