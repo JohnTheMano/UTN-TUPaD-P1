@@ -111,3 +111,115 @@ ambos, solo1, solo2 = buscar_ambos(parcial1, parcial2)
 print(f"Aprobaron ambos parciales: {ambos}")
 print(f"Aprobaron solo el parcial 1: {solo1}")
 print(f"Aprobaron solo el parcial 2: {solo2}")
+
+# 8) Armá un diccionario donde las claves sean nombres de productos y los valores su stock.
+# Permití al usuario:
+# • Consultar el stock de un producto ingresado.
+# • Agregar unidades al stock si el producto ya existe.
+# •     
+
+stock_productos = {
+    "cuadernos": 120,
+    "lapiceras": 200,
+    "marcadores": 85,
+    "trinchetas": 60,
+    "reglas": 45,
+    "mochilas": 30,
+    "cartucheras": 25,
+    "gomas": 150
+}
+
+def existe_producto(entrada,stock):
+    return entrada in stock
+
+def agregar_stock_producto(entrada, stock):
+    if existe_producto(entrada, stock):
+        cantidad = int(input(f"Ingrese la cantidad que desea sumar al stock de '{entrada}': "))
+        stock[entrada] += cantidad
+        print(f"Ahora el producto '{entrada}' tiene {stock[entrada]} unidades.")
+    else:
+        print(f"El producto '{entrada}' no existe en el inventario.")
+        agregar = input(f"¿Deseás agregar '{entrada}' como nuevo producto? (s/n): ").lower()
+        if agregar == "s":
+            cantidad = int(input(f"Ingrese la cantidad inicial para '{entrada}': "))
+            stock[entrada] = cantidad
+            print(f"Producto '{entrada}' agregado con {cantidad} unidades.")
+        else:
+            print("No se agregó el producto.")
+
+
+def consultar_stock(entrada):
+    for producto in stock_productos.keys():
+        if producto == entrada:
+            return stock_productos[entrada]
+
+while True:
+    accion = input("¿Querés consultar o agregar un producto? (consultar/agregar/salir): ").lower()
+
+    if accion == "consultar":
+        producto = input("Nombre del producto a consultar: ").lower()
+        stock = consultar_stock(producto)
+        if stock is not None:
+            print(f"Stock de '{producto}': {stock} unidades.")
+        else:
+            print("Ese producto no existe en el inventario.")
+
+    elif accion == "agregar":
+        producto = input("Nombre del producto a agregar o actualizar: ").lower()
+        agregar_stock_producto(producto, stock_productos)
+
+    elif accion == "salir":
+        print("\nStock final actualizado:")
+        for producto, cantidad in stock_productos.items():
+            print(f"{producto}: {cantidad} unidades")
+        break
+
+    else:
+        print("Opción no válida. Escribí 'consultar', 'agregar' o 'salir'.")
+
+
+# 9) Creá una agenda donde las claves sean tuplas de (día, hora) y los valores sean eventos.
+
+agenda = {}
+
+def agregar_evento(dia, hora, evento):
+    clave = (dia, hora)
+    agenda[clave] = evento
+    print(f"Evento agregado para el {dia} a las {hora}: {evento}")
+
+def consultar_evento(dia, hora):
+    clave = (dia, hora)
+    if clave in agenda:
+        print(f"Evento programado para el {dia} a las {hora}: {agenda[clave]}")
+    else:
+        print("No hay ningún evento programado en ese horario.")
+
+agregar_evento("martes", "14:00", "reunión de grupo")
+consultar_evento("martes", "14:00")
+consultar_evento("viernes", "09:00")
+
+# 10) Dado un diccionario que mapea nombres de países con sus capitales, construí un nuevo
+# diccionario donde:
+# • Las capitales sean las claves.
+# • Los países sean los valores.
+
+paises = {
+    "argentina": "buenos aires",
+    "colombia": "bogotá",
+    "venezuela": "caracas",
+    "perú": "lima",
+    "bolivia": "la paz",
+    "ecuador": "quito",
+    "costa rica": "san josé",
+    "brasil": "brasilia"
+}
+
+def invertir_diccionario(diccionario):
+    invertido = {}
+    for pais in diccionario:
+        capital = diccionario[pais]
+        invertido[capital] = pais
+    return invertido
+
+capitales = invertir_diccionario(paises)
+print(capitales)
